@@ -1,28 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Vidly.Models;
+using System.Collections.Generic;
+using Vidly.Models.DbModels;
+using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
-        [Route("movies/random")]
+
         public IActionResult Random()
         {
-            Movie movie= new Movie() {Name="Shrik!"};
+            List<Movie> movie = new List<Movie> {
+                new Movie { Name = "Shrik!" },
+                new Movie { Name = "Don" }
+            };
             return View(movie);
-        }
-        [Route("movies/Index/{pageIndex:regex(\\d{{4}})}/{SortBy}")]
-        public IActionResult Index(int? PageIndex, string SortBy) {
-            if(!PageIndex.HasValue)
-            {
-                PageIndex = 1;
-            }
-            if (string.IsNullOrWhiteSpace(SortBy))
-            {
-                SortBy = "Name";
-            }
-            return Content(string.Format("PageIndex={0} SortBy={1}",PageIndex,SortBy));
         }
     }
 }
