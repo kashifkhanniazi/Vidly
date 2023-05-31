@@ -8,5 +8,9 @@ namespace Vidly.Models.DbModels
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        public bool IsSubscribedToNewsletter { get; set; }
+        public MembershipType MembershipType { get; set; }
+        public byte MembershipId { get; set; }
+
     }
 }
