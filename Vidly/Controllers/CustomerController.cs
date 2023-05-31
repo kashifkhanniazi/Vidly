@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
+using Vidly.Models;
 using Vidly.Models.DbModels;
 using Vidly.ViewModels;
 
@@ -7,20 +10,20 @@ namespace Vidly.Controllers
 {
     public class CustomerController : Controller
     {
+        private readonly DataContext _context;
+        public CustomerController(DataContext dataContext)
+        {
+            _context= dataContext;
+        }
         public IActionResult Index()
         {
-            List<Customer> customer = new List<Customer>
-            {
-                new Customer { Name = "Ali" },
-                new Customer { Name = "Hasan" },
-                new Customer { Name = "ALi" },
-                new Customer { Name = "Faraz" }
-            };
-            RandomMovieVM vm = new RandomMovieVM
-            {
-                Customers = customer
-            };
-            return View(vm);
+            List<Customer> customer = _context.Customers.Include(c => c.MembershipType).ToList();
+            return View(customer);
+        }
+        public IActionResult Details(int id)
+        {
+            var customer = _context.Customers.FirstOrDefault(Id => Id.Id == id);
+            return View(customer);
         }
     }
 }

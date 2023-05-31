@@ -11,18 +11,20 @@
 }
 else
 {
-    <table>
-        <thead>
-            <tr>
+    <table class="table table-hover">
+        <tr>
+            <th scope="col">
                 Customers
-            </tr>
-        </thead>
-        <tbody>
+            </th>
+        </tr>
+        
             @foreach (var movie in Model)
             {
-            <tr>movie.Name</tr>
+            <tr class="table-light">
+                    <td>
+                        @movie.Name
+                    </td>
+                </tr>
             }
-        </tbody>
-        
     </table>
 }

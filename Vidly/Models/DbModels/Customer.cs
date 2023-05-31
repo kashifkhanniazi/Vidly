@@ -11,7 +11,6 @@ namespace Vidly.Models.DbModels
         public string Name { get; set; }
         public bool IsSubscribedToNewsletter { get; set; }
         public MembershipType MembershipType { get; set; }
-        public byte MembershipId { get; set; }
-
+        public byte MembershipTypeId { get; set; }
     }
 }

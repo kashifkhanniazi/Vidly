@@ -10,8 +10,8 @@ using Vidly.Models;
 namespace Vidly.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230530140125_AddMembershipTypeToCustomer")]
-    partial class AddMembershipTypeToCustomer
+    [Migration("20230531122619_removeColMembershipId")]
+    partial class removeColMembershipId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,15 +31,13 @@ namespace Vidly.Migrations
                     b.Property<bool>("IsSubscribedToNewsletter")
                         .HasColumnType("bit");
 
-                    b.Property<byte>("MembershipId")
-                        .HasColumnType("tinyint");
-
                     b.Property<byte?>("MembershipTypeId")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 
