@@ -4,25 +4,35 @@
 @{
     ViewData["Title"] = "Movies Page";
 }
+<h1>Movies</h1>
 
+@Html.ActionLink("New","New","Movies",null,new { @class="btn btn-success"})
+<br />
+<br />
 @if (Model.Count == 0)
 {
     <text>No one has rent this movie before</text>
 }
 else
 {
-    <table class="table table-hover">
+    <table class="table table-bordered table-hover">
         <tr>
             <th scope="col">
-                Customers
+                Movies
+            </th>
+            <th scope="col">
+                Genre
             </th>
         </tr>
         
             @foreach (var movie in Model)
             {
-            <tr class="table-light">
+                <tr>
                     <td>
-                        @movie.Name
+                        @Html.ActionLink(movie.Name,"Edit","Movies",new {id=movie.Id},null)
+                    </td>
+                    <td>
+                        @movie.Genres.Name
                     </td>
                 </tr>
             }

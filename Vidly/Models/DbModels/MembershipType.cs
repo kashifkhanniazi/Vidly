@@ -11,5 +11,8 @@ namespace Vidly.Models.DbModels
         public short SingUpFee { get; set; }
         public byte DurationInMonths { get; set; }
         public byte DiscountRate { get; set;}
+
+        public static readonly byte unknown = 0;
+        public static readonly byte AsPerMembership = 1;
     }
 }

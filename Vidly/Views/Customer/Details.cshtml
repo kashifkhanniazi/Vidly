@@ -1,3 +1,9 @@
 ﻿@model Vidly.Models.DbModels.Customer
 
 <h1>@Model.Name</h1>
+
+<li>Membership Type: @Model.MembershipType.Name</li>
+@if ((Model.Birthdate).HasValue)
+{
+    <li>Birthdate: @Model.Birthdate</li>
+}
