@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Vidly.Models;
-
 namespace Vidly
 {
     public class Startup
@@ -27,6 +26,7 @@ namespace Vidly
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
             //add dbContext
             services.AddDbContext<DataContext>(options => 
             options.UseSqlServer(Configuration.GetConnectionString("default")));

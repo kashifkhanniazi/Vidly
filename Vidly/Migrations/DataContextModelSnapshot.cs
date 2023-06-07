@@ -86,7 +86,7 @@ namespace Vidly.Migrations
                     b.ToTable("MembershipTypes");
                 });
 
-            modelBuilder.Entity("Vidly.Models.DbModels.", b =>
+            modelBuilder.Entity("Vidly.Models.DbModels.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -127,7 +127,7 @@ namespace Vidly.Migrations
                     b.Navigation("MembershipType");
                 });
 
-            modelBuilder.Entity("Vidly.Models.DbModels.", b =>
+            modelBuilder.Entity("Vidly.Models.DbModels.Movie", b =>
                 {
                     b.HasOne("Vidly.Models.DbModels.Genres", "Genres")
                         .WithMany()
