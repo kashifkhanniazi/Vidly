@@ -26,6 +26,16 @@ namespace Vidly
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+
             services.AddAutoMapper(typeof(Startup));
             //add dbContext
             services.AddDbContext<DataContext>(options => 
@@ -52,7 +62,7 @@ namespace Vidly
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseCors();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

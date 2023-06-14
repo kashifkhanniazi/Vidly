@@ -1,12 +1,5 @@
-﻿@using Vidly.Models.DbModels
-@model List<Customer>
-@if (Model.Count == 0)
-{
-    <text>No one has rent this movie before</text>
-}
-else
-{
-    <table id="customer" class="table table-bordered table-hover">
+﻿<table id="customers" class="table table-bordered table-hover">
+    <thead>
         <tr>
             <th scope="col">
                 Customers
@@ -18,27 +11,58 @@ else
                 Delete
             </th>
         </tr>
-        <tbody>
-            @foreach(var customer in Model)
-            {
-                <tr>
-                    <td>@Html.ActionLink(customer.Name,"Edit","Customer",new {id = customer.Id}, null)</td>
-                    <td>@customer.MembershipType.Name</td>
-                    <td>
-                        <button class="btn-link js-button">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 @section Scripts{
     <script>
         $(document).ready(function (){
-            $("#customer .js-delete").on("click", function(){
-                confirm("Are you sure to delete this customer");
+            //add datatables to customer
+
+
+            var table = $("#customers").DataTable({
+                ajax: {
+                    url: "/api/customer",
+                    dataSrc: function (response) {
+                        return response; // Return the array of customer objects directly
+                    }
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, customer) {
+                            return "<a href='/customer/edit/" + customer.id + "'>" + data + "</a>";
+                        }
+                    },
+                    {
+                        data: "membershipType.name"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link js-delete' data-customer-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ]
+            });
+
+            //call ajax for delete the customer
+            $("#customers").on("click", ".js-delete", function () {
+                var btn = $(this);
+                bootbox.confirm("Are you sure to delete this customer?", function (result) {
+                    if(result){
+                        var url = "/api/customer/" + btn.attr("data-customer-id");
+                        $.ajax({
+                            URL: url,
+                            method: "delete",
+                            success: function () {
+                                table.row(btn.parents("tr")).remove().draw();
+                            }
+
+                        })
+                    }
+                })
             })
         });
     </script>
