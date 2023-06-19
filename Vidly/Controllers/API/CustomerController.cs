@@ -17,26 +17,26 @@ namespace Vidly.Controllers.API
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        public CustomerController(DataContext context,IMapper mapper)
+        public CustomerController(DataContext context, IMapper mapper)
         {
-            _context= context;
-            _mapper= mapper;
+            _context = context;
+            _mapper = mapper;
         }
         [HttpGet]
         public IEnumerable<CustomerDto> GetCustomers()
         {
             return _context.Customers.Include(c => c.MembershipType)
-                .ToList().Select(_mapper.Map<Customer,CustomerDto>);
+                .ToList().Select(_mapper.Map<Customer, CustomerDto>);
         }
         [HttpGet("{id}")]
         public IActionResult GetCustomer(int id)
         {
             var customer = _context.Customers.SingleOrDefault(x => x.Id == id);
-            if(customer == null)
+            if (customer == null)
             {
                 return NotFound();
             }
-            return Ok(_mapper.Map<Customer,CustomerDto>(customer));
+            return Ok(_mapper.Map<Customer, CustomerDto>(customer));
         }
         [HttpPost]
         public IActionResult CreateCustomer(CustomerDto customerDto)
@@ -67,7 +67,7 @@ namespace Vidly.Controllers.API
             _context.SaveChanges();
             return Ok(customerDto);
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteCustomer(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id==id);

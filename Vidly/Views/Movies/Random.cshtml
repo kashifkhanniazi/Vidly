@@ -15,13 +15,16 @@
 }
 else
 {
-    <table class="table table-bordered table-hover">
+    <table id="movies" class="table table-bordered table-hover">
         <tr>
             <th scope="col">
                 Movies
             </th>
             <th scope="col">
                 Genre
+            </th>
+            <th scope="col">
+                Delete
             </th>
         </tr>
         
@@ -34,7 +37,31 @@ else
                     <td>
                         @movie.Genres.Name
                     </td>
+                    <td>
+                        <button class="btn btn-danger js-delete" data-movie-id="@movie.Id">Delete</button>
+                    </td>
                 </tr>
             }
     </table>
+}
+@section Scripts{
+    <script>
+        $(document).ready(function (){
+            $("#movies .js-delete").on("click", function () {
+                var btn = $(this);
+                bootbox.confirm("Are you sure to delete this movie?",function (result){
+                    if(result){
+                        var url="/api/movie/"+ btn.attr("data-movie-id");
+                        $.ajax({
+                            url: url,
+                            method: "delete",
+                            success: function () {
+                                btn.parents("tr").remove();
+                            }
+                        })
+                    }
+                })
+            })
+        })
+    </script>
 }

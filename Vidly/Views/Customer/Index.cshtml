@@ -41,7 +41,7 @@
                     {
                         data: "id",
                         render: function (data) {
-                            return "<button class='btn-link js-delete' data-customer-id=" + data + ">Delete</button>";
+                            return `<button class='btn btn-danger js-delete' data-customer-id=${data}>Delete</button>`;
                         }
                     }
                 ]
@@ -54,7 +54,7 @@
                     if(result){
                         var url = "/api/customer/" + btn.attr("data-customer-id");
                         $.ajax({
-                            URL: url,
+                            url: url,
                             method: "delete",
                             success: function () {
                                 table.row(btn.parents("tr")).remove().draw();
